@@ -6,8 +6,8 @@ import (
 	_ "github.com/go-sql-driver/mysql"
 
 	"github.com/knq/snaker"
-	"github.com/knq/xo/internal"
-	"github.com/knq/xo/models"
+	"github.com/drblez/xo/internal"
+	"github.com/drblez/xo/models"
 )
 
 func init() {
@@ -173,7 +173,15 @@ switchDT:
 			typ = "sql.NullFloat64"
 		}
 
-	case "decimal", "double":
+	case "decimal":
+		nilVal = "decimal.Zero"
+		typ = "decimal.Decimal"
+		if nullable {
+			nilVal = "decimal.NullDecimal{}"
+			typ = "decimal.NullDecimal"
+		}
+
+	case "double":
 		nilVal = "0.0"
 		typ = "float64"
 		if nullable {
